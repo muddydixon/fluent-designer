@@ -1,0 +1,17 @@
+!!!doctype 
+html
+  head
+    meta(charset= 'utf8')
+    title= title
+    link(type= 'text/css', rel= 'stylesheet', media= 'all', href= '/css/bootstrap-responsive.min.css')
+    link(type= 'text/css', rel= 'stylesheet', media= 'all', href= '/css/bootstrap.min.css')
+
+    link(type= 'text/css', rel= 'stylesheet/less', media= 'all', href= '/css/main.less')
+    script(type= 'text/javascript', charset= 'utf8', src= '/js/less-1.2.1.min.js')
+  body(data-spy= 'scroll', data-target= '.subnav', data-offset= '50', data-twttr-rendered= 'true')
+    != partial('header')
+    != body
+    != partial('footer')
+    script(type= 'text/javascript', charset= 'utf8', src= '/js/jquery-1.7.2.min.js')
+    script(type= 'text/javascript', charset= 'utf8', src= '/js/bootstrap.min.js')
+    script(type= 'text/javascript', charset= 'utf8', src= '/js/main.js')

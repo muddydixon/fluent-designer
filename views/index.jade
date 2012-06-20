@@ -1,0 +1,32 @@
+div.container-fluid
+  div.row-fluid
+    div.span10
+      div#pane
+    div.span2
+      div#control
+        ul.nav
+          li
+            a#addServer.btn= 'Add Server'
+          li
+            a#addFluentd.btn= 'Add Fluentd'
+          li
+            a#addSource.btn= 'Add Source'
+          li
+            a#addMatch.btn= 'Add Match'
+            
+div#edit_match.modal.hide.fade
+  div.modal-header
+    h3= 'Edit Match'
+  div.modal-body
+    form.form-horizontal
+      fieldset
+        div.control-group
+          label.control-label(for= 'editMatchPlugin')= 'out plugin'
+          div.controls
+            select#editMatchPlugin
+              - outPlugins.forEach(function(plugin){
+                option= plugin.name
+              - })
+  div.modal-footer
+    a.btn(data-dismiss= 'modal')= 'Close'
+    a.btn.btn-primary= 'Save'
