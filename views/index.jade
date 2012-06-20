@@ -14,16 +14,56 @@ div.container-fluid
           li
             a#addMatch.btn= 'Add Match'
             
-div#edit_match.modal.hide.fade
+div.template.match
+  div.match
+    div.header
+      h2.tag
+      h3.type
+    div.body
+      div.config
+    div.footer
+      a.btn= 'edit'
+
+div.template.source
+  div.source
+    div.header
+      h3.type
+    div.body
+      div.config
+    div.footer
+      a.btn= 'edit'
+
+div#edit.match.modal.hide.fade
   div.modal-header
     h3= 'Edit Match'
   div.modal-body
     form.form-horizontal
       fieldset
         div.control-group
-          label.control-label(for= 'editMatchPlugin')= 'out plugin'
+          label.control-label(for= 'editMatchPlugin')= 'tag'
           div.controls
-            select#editMatchPlugin
+            input#editMatchTag.input-xlarge(type= 'text', name= 'tag')
+        div.control-group
+          label.control-label(for= 'editMatchPlugin')= 'out type'
+          div.controls
+            select#editMatchPlugin(name= 'plugin')
+              - outPlugins.forEach(function(plugin){
+                option= plugin.name
+              - })
+  div.modal-footer
+    a.btn(data-dismiss= 'modal')= 'Close'
+    a.btn.btn-primary= 'Save'
+
+div#edit.source.modal.hide.fade
+  div.modal-header
+    h3= 'Edit Source'
+  div.modal-body
+    form.form-horizontal
+      fieldset
+        div.control-group
+          label.control-label(for= 'editSourcePlugin')= 'input type'
+          div.controls
+            select#editMatchPlugin(name= 'plugin')
               - outPlugins.forEach(function(plugin){
                 option= plugin.name
               - })

@@ -1,10 +1,15 @@
 $ () ->
+  # 要素を保持
   pane = $('#pane')
   control = $('#control')
+
+  # ボタン
   addItem = ()->
+    
     control.find('a').off('click', addItem)
     type = $(this).attr 'id'
     pane.css({cursor: 'crosshair'})
+    
     pane.on('click', (ev) ->
       pane.off('click')
       pane.css({cursor: ''})
@@ -19,15 +24,29 @@ $ () ->
           elm = new Source()
         else
           elm = new Item()
+          
       elm.render(pane, {x: ev.clientX, y: ev.clientY})
+      
       control.find('a').on('click', addItem)
       return 
       )
     return
   control.find('a').on('click', addItem)
 
+  # modal dialog
   $('.modal .btn-primary').on('click', ()->
-    console.log $($('div.new').data('obj'))
+    modal = $($(this).parents('div.modal')[0])
+    item = $($('div.new').data('obj'))[0]
+
+    console.log item, item.name
+    
+    if item.name is 'match' or item.name is 'source'
+      
+      item.set('plugin', modal.find('select[name=plugin]').val())
+      item.el.find('.type').text(modal.find('select[name=plugin]').val())
+      
+      if item.el.find('.tag')?
+        item.el.find('.tag').text(modal.find('input[name=tag]').val())
     )
   
   return
@@ -38,6 +57,7 @@ $ () ->
 class Item
   constructor: ()->
   render: (target, pos)->
+    @html = $('.template.'+@name).html()
     @el = $(@html)
     @el.data('obj', this)
     @bindEvent @el
@@ -49,7 +69,12 @@ class Item
     @popupSettings()
 
   popupSettings: ()->
-    $('#edit_'+@name).modal()
+    $('#edit.'+@name).modal()
+  set: (attr, val) ->
+    this[attr] = val
+    return val
+  get: (attr) ->
+    return this[attr]
   bindEvent: ()->
     for event of @events or {}
       @el.on event, @events[event]
@@ -57,11 +82,9 @@ class Item
 class Server extends Item
   constructor: ()->
     @name = 'server'
-    @html = '<div class="server">Server</div>'
 class Match extends Item
   constructor: ()->
     @name = 'match'
-    @html = '<div class="match">Match</div>'
     @events =
       click: ()->
         alert(1)
@@ -71,10 +94,9 @@ class Match extends Item
 class Source extends Item
   constructor: ()->
     @name = 'source'
-    @html = '<div class="source">Source</div>'
+    
 class Fluentd extends Item
   constructor: ()->
     @name = 'fluentd'
-    @html = '<div class="fluentd">Flentd</div>'
         
     
