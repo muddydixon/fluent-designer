@@ -6,13 +6,13 @@ div.container-fluid
       div#control
         ul.nav
           li
-            a#addServer.btn= 'Add Server'
+            a.add.btn(data-type= 'server')= 'Add Server'
           li
-            a#addFluentd.btn= 'Add Fluentd'
+            a.add.btn(data-type= 'fluentd')= 'Add Fluentd'
           li
-            a#addSource.btn= 'Add Source'
+            a.add.btn(data-type= 'source')= 'Add Source'
           li
-            a#addMatch.btn= 'Add Match'
+            a.add.btn(data-type= 'match')= 'Add Match'
             
 div.template.match
   div.match
@@ -22,7 +22,6 @@ div.template.match
     div.body
       div.config
     div.footer
-      a.btn= 'edit'
 
 div.template.source
   div.source
@@ -31,9 +30,8 @@ div.template.source
     div.body
       div.config
     div.footer
-      a.btn= 'edit'
 
-div#edit.match.modal.hide.fade
+div.edit.modal.hide.fade(data-type= 'match')
   div.modal-header
     h3= 'Edit Match'
   div.modal-body
@@ -44,17 +42,17 @@ div#edit.match.modal.hide.fade
           div.controls
             input#editMatchTag.input-xlarge(type= 'text', name= 'tag')
         div.control-group
-          label.control-label(for= 'editMatchPlugin')= 'out type'
+          label.control-label(for= 'editMatchType')= 'out type'
           div.controls
-            select#editMatchPlugin(name= 'plugin')
-              - outPlugins.forEach(function(plugin){
-                option= plugin.name
-              - })
+            select#editMatchType.type(name= 'type')
+              option= ''
+        label= 'Config'
+        fieldset.config
   div.modal-footer
     a.btn(data-dismiss= 'modal')= 'Close'
     a.btn.btn-primary= 'Save'
 
-div#edit.source.modal.hide.fade
+div.edit.modal.hide.fade(data-type= 'source')
   div.modal-header
     h3= 'Edit Source'
   div.modal-body
@@ -63,10 +61,8 @@ div#edit.source.modal.hide.fade
         div.control-group
           label.control-label(for= 'editSourcePlugin')= 'input type'
           div.controls
-            select#editMatchPlugin(name= 'plugin')
-              - outPlugins.forEach(function(plugin){
-                option= plugin.name
-              - })
+            select#editSourcePlugin(name= 'plugin')
+              option= ''
   div.modal-footer
-    a.btn(data-dismiss= 'modal')= 'Close'
+    a.btn.close(data-dismiss= 'modal')= 'Close'
     a.btn.btn-primary= 'Save'
