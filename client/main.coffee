@@ -16,17 +16,22 @@ $.get('/api/v0.0/plugins').done((res)->
     )
 
 # アイテム追加ボタン
-addItem = ()->
+addItem = (ev)->
   button = $(this)
   button.addClass('active')
   control.find('a').off('click', addItem)
   type = $(this).attr('data-type')
   pane.css({cursor: 'crosshair'})
     
+  if ev.data?
+    target = ev.data.target
+    console.log target
   pane.on('click', (ev) ->
     pane.off('click')
     pane.css({cursor: ''})
 
+    if target?
+      $('.modal[data-type='+type+']').data('target', target)
     $('.modal[data-type='+type+']').data('pos', {x: ev.clientX, y: ev.clientY}).modal()
     
     control.find('a').on('click', addItem)
@@ -59,7 +64,7 @@ $('div.modal a.btn-primary').on('click', (ev)->
     console.log res.err
   else
     # 正常完了
-    item.render(pane, modal.data('pos'))
+    item.render(modal.data('target') or pane, if modal.data('target') then null else modal.data('pos'))
 
     # modal 初期化
     modal.find('input').val('')
@@ -82,6 +87,7 @@ $('div.modal form').on('submit', () ->
 # modal Match
 $('div.modal[data-type=match] form select.type').on('change', ()->
   modal = $($(this).parents('div.modal')[0])
+  modal.find('.config .control-group').remove()
   item = $($('div.new').data('obj'))[0]
   config = modal.find('fieldset.config')
   cgrp = $('<div class="control-group">')
@@ -100,18 +106,44 @@ $('div.modal[data-type=match] form select.type').on('change', ()->
 
 ############################################################
 # 
+# modal Source
+$('div.modal[data-type=source] form select.type').on('change', ()->
+  modal = $($(this).parents('div.modal')[0])
+  modal.find('.config .control-group').remove()
+  item = $($('div.new').data('obj'))[0]
+  config = modal.find('fieldset.config')
+  cgrp = $('<div class="control-group">')
+    .append($('<label class="control-label">'),
+      $('<div class="controls">'))
+  for plugin in plugins.in
+    if plugin.name is $(this).val()
+      for conf of plugin.config
+        c = cgrp.clone()
+        c.find('label').text(conf)
+        if plugin.config[conf].required?
+          c.find('label').append $('<span>').addClass('required').text('*')
+        c.find('div.controls').append $('<input type="text">').attr('name', conf)
+        config.append c
+  )
+
+############################################################
+# 
 # base Class: Item 
 class Item
   constructor: ()->
   render: (target, pos)->
-    @html = $('.template.'+@name).html()
+    @html = $('.template.'+@_name).html()
     @el = $(@html)
     @el.data('obj', this)
     @bindEvent @el
     @el.addClass 'item'
-    @el.css
-      left: pos.x
-      top: pos.y
+    if pos?
+      @el.css
+        left: pos.x
+        top: pos.y
+    else
+      @el.css
+        position: 'static'
     @setHtml()
     $(target).append @el
     @el.draggable()
@@ -131,13 +163,41 @@ class Item
 # Server class
 class Server extends Item
   constructor: ()->
-    @name = 'server'
+    @_name = 'server'
+  setForm: (form) ->
+    @hostname = form.find('input[name=hostname]').val()
+    
+    return {err: null}
+  setHtml: ()->
+    el = @el
+    @el.find('h2.hostname').text(@hostname)
+    @el.find('a.add').on 'click', {target: el.find('div.fluentds')}, addItem
+    @el.droppable
+      over: (ev, ui)->
+      drop: (ev, ui)->
+        el.find('div.fluentds').append ui.draggable[0]
+    
+############################################################
+#  Fluentd class
+class Fluentd extends Item
+  constructor: ()->
+    @_name = 'fluentd'
+  setForm: (form) ->
+    @filename = form.find('input[name=filename]').val()
+    
+    return {err: null}
+  setHtml: ()->
+    el = @el
+    @el.find('h2.filename').text(@filename)
+    console.log el
+    @el.find('a.add.sources').on 'click', {target: el.find('div.sources')}, addItem
+    @el.find('a.add.matches').on 'click', {target: el.find('div.matches')}, addItem
     
 ############################################################
 #  Match class
 class Match extends Item
   constructor: ()->
-    @name = 'match'
+    @_name = 'match'
     @events = []
   setForm: (form) ->
     @tag = form.find('input[name=tag]').val()
@@ -167,20 +227,21 @@ class Match extends Item
 #  Source class
 class Source extends Item
   constructor: ()->
-    @name = 'source'
+    @_name = 'source'
   setForm: (form) ->
     @type = form.find('select').val()
+    if @type.match(/^[\s\r\t\b]*$/)
+      return {err: 'type required'}
+
+    @config = {}
+    for input in form.find('.config input')
+      @config[$(input).attr('name')] = $(input).val()
+      
+    return {err: null}
   setHtml: ()->
     @el.find('h3.type').text(@type)
     table = $('<table>')
     for conf of @config
       table.append $('<tr>').append($('<th>').text(conf), $('<td>').text(@config[conf]))
     @el.find('div.config').append table
-    
-############################################################
-#  Fluentd class
-class Fluentd extends Item
-  constructor: ()->
-    @name = 'fluentd'
-        
     

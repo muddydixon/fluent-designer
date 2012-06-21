@@ -14,6 +14,26 @@ div.container-fluid
           li
             a.add.btn(data-type= 'match')= 'Add Match'
             
+div.template.server
+  div.server
+    div.header
+      h2.hostname
+    div.body
+      a.btn.add(data-type= 'fluentd')= 'Add Fluentd'
+      div.fluentds
+    div.footer
+
+div.template.fluentd
+  div.fluentd
+    div.header
+      h2.filename
+    div.body
+      a.btn.sources= 'Add Source'
+      div.plugins.sources
+      a.btn.matches= 'Add Match'
+      div.plugins.matches
+    div.footer
+
 div.template.match
   div.match
     div.header
@@ -31,6 +51,37 @@ div.template.source
       div.config
     div.footer
 
+// match server
+div.edit.modal.hide.fade(data-type= 'server')
+  div.modal-header
+    h3= 'Edit Server'
+  div.modal-body
+    form.form-horizontal
+      fieldset
+        div.control-group
+          label.control-label(for= 'editServerHostName')= 'hostname'
+          div.controls
+            input#editServerName.input-xlarge(type= 'text', name= 'hostname')
+  div.modal-footer
+    a.btn(data-dismiss= 'modal')= 'Close'
+    a.btn.btn-primary= 'Save'
+
+// match fluentd
+div.edit.modal.hide.fade(data-type= 'fluentd')
+  div.modal-header
+    h3= 'Edit Fluentd'
+  div.modal-body
+    form.form-horizontal
+      fieldset
+        div.control-group
+          label.control-label(for= 'editFluentdFileName')= 'filename'
+          div.controls
+            input#editFluentdFileName.input-xlarge(type= 'text', name= 'filename')
+  div.modal-footer
+    a.btn(data-dismiss= 'modal')= 'Close'
+    a.btn.btn-primary= 'Save'
+
+// match modal
 div.edit.modal.hide.fade(data-type= 'match')
   div.modal-header
     h3= 'Edit Match'
@@ -52,6 +103,7 @@ div.edit.modal.hide.fade(data-type= 'match')
     a.btn(data-dismiss= 'modal')= 'Close'
     a.btn.btn-primary= 'Save'
 
+// source modal
 div.edit.modal.hide.fade(data-type= 'source')
   div.modal-header
     h3= 'Edit Source'
@@ -61,8 +113,10 @@ div.edit.modal.hide.fade(data-type= 'source')
         div.control-group
           label.control-label(for= 'editSourcePlugin')= 'input type'
           div.controls
-            select#editSourcePlugin(name= 'plugin')
+            select#editSourcePlugin.type(name= 'plugin')
               option= ''
+        label= 'Config'
+        fieldset.config
   div.modal-footer
     a.btn.close(data-dismiss= 'modal')= 'Close'
     a.btn.btn-primary= 'Save'

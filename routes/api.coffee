@@ -33,7 +33,23 @@ routes['/api/v0.0/plugins'] =
           {name: 's3', config: {}}
         ]
         in: [
-          {name: 'forward', config: {}}
-          {name: 'tail', config: {}}
+          {name: 'forward', config: {
+            port:
+              type: Number
+              default: 24224
+            }}
+          {name: 'tail', config: {
+            path:
+              type: String
+              required: true
+            tag:
+              type: String
+              required: true
+            format:
+              type: String
+              required: true
+            pos_file:
+              type: String
+            }}
         ]
       }
