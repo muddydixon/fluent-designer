@@ -15,9 +15,24 @@ div#pane {
     }
     .match {
         background: #CCC;
-        width: 200px
+        width: 200px;
+        .config {
+            table tr {
+                th {
+                    text-align: right;
+                }
+                td {
+                    text-align: left;
+                }
+            }
+        }
     }
     .source {
+    }
+}
+div.modal {
+    .required {
+        color: red;
     }
 }
 div.template {
