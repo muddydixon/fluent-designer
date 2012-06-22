@@ -189,9 +189,17 @@ class Fluentd extends Item
   setHtml: ()->
     el = @el
     @el.find('h2.filename').text(@filename)
-    console.log el
-    @el.find('a.add.sources').on 'click', {target: el.find('div.sources')}, addItem
-    @el.find('a.add.matches').on 'click', {target: el.find('div.matches')}, addItem
+    @el.find('a.add[data-type=source]').on 'click', {target: el.find('div.sources')}, addItem
+    @el.find('a.add[data-type=match]').on 'click', {target: el.find('div.matches')}, addItem
+    @el.droppable
+      over: (ev, ui)->
+        type = $(ui.draggable[0]).data('obj')._name
+        el.find('div.'+type).addClass 'hover'
+      over: (ev, ui)->
+        type = $(ui.draggable[0]).data('obj')._name
+        el.find('div.'+type).addClass 'hover'
+      drop: (ev, ui)->
+        el.find('div.fluentds').append ui.draggable[0]
     
 ############################################################
 #  Match class

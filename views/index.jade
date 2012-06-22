@@ -28,9 +28,9 @@ div.template.fluentd
     div.header
       h2.filename
     div.body
-      a.btn.sources= 'Add Source'
+      a.btn.add(data-type= 'source')= 'Add Source'
       div.plugins.sources
-      a.btn.matches= 'Add Match'
+      a.btn.add(data-type= 'match')= 'Add Match'
       div.plugins.matches
     div.footer
 
@@ -51,7 +51,7 @@ div.template.source
       div.config
     div.footer
 
-// match server
+// modal server
 div.edit.modal.hide.fade(data-type= 'server')
   div.modal-header
     h3= 'Edit Server'
@@ -66,7 +66,7 @@ div.edit.modal.hide.fade(data-type= 'server')
     a.btn(data-dismiss= 'modal')= 'Close'
     a.btn.btn-primary= 'Save'
 
-// match fluentd
+// modal fluentd
 div.edit.modal.hide.fade(data-type= 'fluentd')
   div.modal-header
     h3= 'Edit Fluentd'
@@ -81,7 +81,7 @@ div.edit.modal.hide.fade(data-type= 'fluentd')
     a.btn(data-dismiss= 'modal')= 'Close'
     a.btn.btn-primary= 'Save'
 
-// match modal
+// modal match
 div.edit.modal.hide.fade(data-type= 'match')
   div.modal-header
     h3= 'Edit Match'
@@ -103,7 +103,7 @@ div.edit.modal.hide.fade(data-type= 'match')
     a.btn(data-dismiss= 'modal')= 'Close'
     a.btn.btn-primary= 'Save'
 
-// source modal
+// modal source
 div.edit.modal.hide.fade(data-type= 'source')
   div.modal-header
     h3= 'Edit Source'
