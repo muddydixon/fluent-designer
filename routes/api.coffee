@@ -2,10 +2,10 @@ routes['/api/v0.0/plugins'] =
   get: (req, res) ->
     res.send
       plugins: {
-        out: [
-          {name: 'forward', config: {}}
-          {name: 'stdout', config: {}}
-          {name: 'mongo', config: {
+        matches: [
+          {type: 'forward', config: {}}
+          {type: 'stdout', config: {}}
+          {type: 'mongo', config: {
             database:
               type: String
               required: true
@@ -27,18 +27,18 @@ routes['/api/v0.0/plugins'] =
             password:
               type: Plugin.Type.Password
             }}
-          {name: 'forest', config: {}}
-          {name: 'datacounter', config: {}}
-          {name: 'datacalculator', config: {}}
-          {name: 's3', config: {}}
+          {type: 'forest', config: {}}
+          {type: 'datacounter', config: {}}
+          {type: 'datacalculator', config: {}}
+          {type: 's3', config: {}}
         ]
-        in: [
-          {name: 'forward', config: {
+        sources: [
+          {type: 'forward', config: {
             port:
               type: Number
               default: 24224
             }}
-          {name: 'tail', config: {
+          {type: 'tail', config: {
             path:
               type: String
               required: true

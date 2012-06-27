@@ -1,0 +1,71 @@
+{
+    "servers": [
+      {
+        "name": "localhost"
+        , "fluentds": [
+          {
+              "name": "hoge"
+            , "plugins": {
+              "sources": [
+                {
+                  "type": "tail"
+                  , "config": {
+                    "tag": "test.debug"
+                    , "path": "/data/test.json"
+                    , "format": "json"
+                    , "pos_file": "/data/test.json.pos"
+                  }
+                }
+              ]
+              , "matches": [
+                {
+                  "tag": "test.debug"
+                  , "type": "stdout"
+                  , "config": {}
+                }
+                , {
+                  "tag": "test.info"
+                  , "type": "forward"
+                  , "config": {
+                    "server": "remote"
+                  }
+                }
+              ]
+              , "includes": [
+                "/etc/hoge.conf"
+              ]
+            }
+          }
+        ]
+      }
+      , {
+        "name": "remote"
+        , "fluentds": [
+          {
+              "name": "fuga"
+            , "plugins": {
+              "sources": [
+                {
+                  "type": "forward"
+                  , "config": {
+                    "port": 24224
+                  }
+                }
+              ]
+              , "matches": [
+                {
+                  "tag": "test.info"
+                  , "type": "file"
+                  , "config": {
+                    "path": "/data/log/info"
+                  }
+                }
+              ]
+              , "includes": [
+              ]
+            }
+          }
+        ]
+      }
+    ]
+}

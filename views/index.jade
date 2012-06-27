@@ -8,14 +8,12 @@ div.container-fluid
           li
             a.add.btn(data-type= 'server')= 'Add Server'
           li
-            a.add.btn(data-type= 'fluentd')= 'Add Fluentd'
+            a.add.btn(data-type= 'file')= 'Add File'
           li
-            a.add.btn(data-type= 'source')= 'Add Source'
-          li
-            a.add.btn(data-type= 'match')= 'Add Match'
+            a.add.btn(data-type= 'store')= 'Add Store'
             
 div.template.server
-  div.server
+  div.server.item
     div.header
       h2.hostname
     div.body
@@ -24,7 +22,7 @@ div.template.server
     div.footer
 
 div.template.fluentd
-  div.fluentd
+  div.fluentd.item
     div.header
       h2.filename
     div.body
@@ -35,18 +33,22 @@ div.template.fluentd
     div.footer
 
 div.template.match
-  div.match
+  div.match.plugin.item
     div.header
-      h2.tag
-      h3.type
+      h2
+        span= 'Match'
+        span.type
     div.body
+      h3.tag
       div.config
     div.footer
 
 div.template.source
-  div.source
+  div.source.plugin.item
     div.header
-      h3.type
+      h2
+        span= 'Source'
+        span.type
     div.body
       div.config
     div.footer
