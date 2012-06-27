@@ -8,20 +8,20 @@ class Plugins
     self = this
     $.get(path).done((json)->
       if json?
-        @_sources = json.plugins.sources
-        @_matches = json.plugins.matches
-        self.cb(@_sources, @_matches)
+        self._sources = json.plugins.sources
+        self._matches = json.plugins.matches
+        self.cb(self._sources, self._matches)
       ).fail((err)->
         console.log err
         )
   getMatchConfig: (type)->
     for match in @_matches
-      if match.type = type
+      if match.type is type
         return match
     return null
   getSourceConfig: (type)->
     for source in @_sources
-      if source.type = type
+      if source.type is type
         return source
     return null
           

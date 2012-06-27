@@ -64,12 +64,16 @@ class Fluentd extends Item
     @el.find('h2.filename').text(@filename or @data.name)
     @el.find('a.add[data-type=source]').on 'click', {target: el.find('div.sources')}, addItem
     @el.find('a.add[data-type=match]').on 'click', {target: el.find('div.matches')}, addItem
-    @el.droppable
+    @el.find('.plugins').droppable
+      hoverClass: 'hover'
       over: (ev, ui)->
-        type = $(ui.draggable[0]).data('obj')._name
-        el.find('div.'+type).addClass 'hover'
       drop: (ev, ui)->
-        el.find('div.fluentds').append ui.draggable[0]
+        elm = ui.draggable[0]
+        $(elm).css
+          left: 0
+          top: 0
+        $(this).append elm
+
     
 ############################################################
 #  Match class
@@ -93,9 +97,16 @@ class Match extends Item
   setHtml: ()->
     @el.find('h3.tag').text(@tag or @data.tag)
     @el.find('span.type').text(@type or @data.type)
+    
+    plugin = plugins.getMatchConfig(@type or @data.type)
+    config = @config or @data.config
+    
     table = $('<table>')
-    for conf of @config
-      table.append $('<tr>').append($('<th>').text(conf), $('<td>').text(@config[conf]))
+    console.log @type or @data.type, plugin
+    for attr of plugin.config
+      console.log attr, val
+      val = config[attr] or plugin.config[attr].default or ''
+      table.append $('<tr>').append($('<th>').text(attr), $('<td>').text(val))
     @el.find('div.config').append table
     
 ############################################################
@@ -114,9 +125,9 @@ class Source extends Item
     return {err: null}
   setHtml: ()->
     @el.find('span.type').text(@type or @data.type)
-    table = $('<table>')
-
+    
     config = @config or @data.config
+    table = $('<table>')
     for conf of config
       table.append $('<tr>').append($('<th>').text(conf), $('<td>').text(config[conf]))
     @el.find('div.config').append table

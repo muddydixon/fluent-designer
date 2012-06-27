@@ -1,6 +1,7 @@
 Plugin = {}
 Plugin.Type =
   Password: String
+  Server: String
 routes['/'] =
   get: (req, res) ->
     res.render 'index',

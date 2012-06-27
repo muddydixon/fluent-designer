@@ -3,7 +3,11 @@ routes['/api/v0.0/plugins'] =
     res.send
       plugins: {
         matches: [
-          {type: 'forward', config: {}}
+          {type: 'forward', config: {
+            server:
+              type: [Plugin.Type.Server]
+              default: 'localhost'
+            }}
           {type: 'stdout', config: {}}
           {type: 'mongo', config: {
             database:

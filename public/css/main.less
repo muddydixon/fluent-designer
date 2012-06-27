@@ -38,7 +38,6 @@ div#pane {
     .server {
         width: 300px;
         div.body div.fluentds {
-            border-top: 1px solid #CCC;
             margin: 10px 0 0 0;
             padding: 10px 0 0 0;
         }
@@ -46,10 +45,15 @@ div#pane {
     .fluentd {
         width: 290px;
         div.body div.plugins {
-            border-top: 1px solid #CCC;
             margin: 10px 0 10px 0;
             padding: 10px 0 0 0;
             width: 280px;
+        }
+        div.body div.plugins.hover {
+            background: #FF0;
+        }
+        div.body div.matches {
+            border-top: 1px solid #CCC;
         }
     }
     .plugin {
