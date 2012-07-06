@@ -30,7 +30,7 @@ $('div.modal a.btn-primary').on('click', (ev)->
 
     # modal 完了
     modal.modal('hide')
-  return
+  return false
   )
   
 # event proxy
@@ -50,15 +50,15 @@ $('div.modal[data-type=match] form select.type').on('change', ()->
   cgrp = $('<div class="control-group">')
     .append($('<label class="control-label">'),
       $('<div class="controls">'))
-  for plugin in plugins.out
-    if plugin.name is $(this).val()
-      for conf of plugin.config
-        c = cgrp.clone()
-        c.find('label').text(conf)
-        if plugin.config[conf].required?
-          c.find('label').append $('<span>').addClass('required').text('*')
-        c.find('div.controls').append $('<input type="text">').attr('name', conf)
-        config.append c
+      
+  plugin = plugins.getMatchConfig($(this).val())
+  for conf of plugin.config
+    c = cgrp.clone()
+    c.find('label').text(conf)
+    if plugin.config[conf].required?
+      c.find('label').append $('<span>').addClass('required').text('*')
+    c.find('div.controls').append $('<input type="text">').attr('name', conf)
+    config.append c
   )
 
 ############################################################
@@ -72,14 +72,15 @@ $('div.modal[data-type=source] form select.type').on('change', ()->
   cgrp = $('<div class="control-group">')
     .append($('<label class="control-label">'),
       $('<div class="controls">'))
-  for plugin in plugins.in
-    if plugin.name is $(this).val()
-      for conf of plugin.config
-        c = cgrp.clone()
-        c.find('label').text(conf)
-        if plugin.config[conf].required?
-          c.find('label').append $('<span>').addClass('required').text('*')
-        c.find('div.controls').append $('<input type="text">').attr('name', conf)
-        config.append c
+      
+  plugin = plugins.getSourceConfig($(this).val())
+      
+  for conf of plugin.config
+    c = cgrp.clone()
+    c.find('label').text(conf)
+    if plugin.config[conf].required?
+      c.find('label').append $('<span>').addClass('required').text('*')
+    c.find('div.controls').append $('<input type="text">').attr('name', conf)
+    config.append c
   )
 

@@ -2,6 +2,16 @@
 pane = $('#pane')
 control = $('#control')
 
+pane.droppable
+  scope: 'server'
+  drop: (ev, ui)->
+
+# header
+flow = $('#control a.flow')
+flow.find('.save').on('click', ()->
+  conf.save()
+  )
+  
 # pluginsを取得/保持
 plugins = new Plugins((sources, matches)->
   matchPane = $('.edit[data-type=match] form select')
@@ -36,7 +46,7 @@ addItem = (ev)->
     return 
     )
   return
-control.find('a').on('click', addItem)
+control.find('a.item').on('click', addItem)
 
 ############################################################
 #  main

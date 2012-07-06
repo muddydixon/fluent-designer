@@ -9,6 +9,7 @@ routes['/api/v0.0/plugins'] =
               default: 'localhost'
             }}
           {type: 'stdout', config: {}}
+          {type: 'file', config: {}}
           {type: 'mongo', config: {
             database:
               type: String

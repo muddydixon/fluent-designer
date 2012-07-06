@@ -1,9 +1,14 @@
 {
-    "name": "application-name"
+    "name": "fluent-desiner"
   , "version": "0.0.1"
   , "private": true
+  , "scripts": {
+      "start": "node app.js"
+    , "prestart": "cake build"
+  }
   , "dependencies": {
       "express": "2.5.8"
     , "jade": "0.26.3"
+    , "coffee-script": "1.3.3"
   }
 }

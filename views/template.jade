@@ -1,0 +1,40 @@
+div.template.server
+  div.server.item
+    div.header
+      h2.hostname
+    div.body
+      div.fluentds
+        a.btn.add(data-type= 'fluentd')= 'Add Fluentd'
+    div.footer
+
+div.template.fluentd
+  div.fluentd.item
+    div.header
+      h2.filename
+    div.body
+      div.plugins.sources
+        a.btn.add(data-type= 'source')= 'Add Source'
+      div.plugins.matches
+        a.btn.add(data-type= 'match')= 'Add Match'
+    div.footer
+
+div.template.match
+  div.match.plugin.item
+    div.header
+      h2
+        span= 'Match'
+        span.type
+    div.body
+      h3.tag
+      div.config
+    div.footer
+
+div.template.source
+  div.source.plugin.item
+    div.header
+      h2
+        span= 'Source'
+        span.type
+    div.body
+      div.config
+    div.footer

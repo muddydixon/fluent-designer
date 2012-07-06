@@ -1,8 +1,14 @@
-div#control {
-    .btn {
-        margin: 2px;
+ul#control {
+    li {
+        a {
+            cursor: pointer;
+        }
+        a:hover {
+            color: white;
+        }
     }
 }
+
 div#pane {
     width: 100%;
     height: 90%;
@@ -14,6 +20,7 @@ div#pane {
         border: 1px solid #CCC;
         border-radius: 3px;
         box-shadow: 2px 2px 2px #AAA;
+        background: white;
         div.header {
             cursor: move;
             h2 {
@@ -40,6 +47,9 @@ div#pane {
         div.body div.fluentds {
             margin: 10px 0 0 0;
             padding: 10px 0 0 0;
+        }
+        div.body div.fluentds.hover {
+            background: #FF0;
         }
     }
     .fluentd {

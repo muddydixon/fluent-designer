@@ -5,7 +5,7 @@ Plugin.Type =
 routes['/'] =
   get: (req, res) ->
     res.render 'index',
-      title: 'hoge'
+      title: 'Fluentd Designer'
       outPlugins: [
         {name: 'mongo', config: {
           database:

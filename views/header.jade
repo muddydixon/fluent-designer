@@ -3,10 +3,15 @@ div.navbar.navbar-fixed-top
     div.container
       a.brand= title
       div.nav-collapse.collapse
-        ul.nav
+        ul.nav#control
           li
-            a= 'New Flow'
+            a.flow.new= 'New Flow'
           li
-            a= 'Load Flow'
+            a.flow.load= 'Load Flow'
           li
-            a= 'Save Flow'
+            a.flow.save= 'Save Flow'
+          li.divider-vertical
+          li
+            a.item(data-type= 'server')= 'Add Server'
+          li
+            a.item(data-type= 'store')= 'Add Store'

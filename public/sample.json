@@ -4,37 +4,34 @@
         "name": "localhost"
         , "fluentds": [
           {
-              "name": "hoge"
-            , "plugins": {
-              "sources": [
-                {
-                  "type": "tail"
-                  , "config": {
-                    "tag": "test.debug"
-                    , "path": "/data/test.json"
-                    , "format": "json"
-                    , "pos_file": "/data/test.json.pos"
-                  }
-                }
-              ]
-              , "matches": [
-                {
+            "name": "hoge"
+            , "sources": [
+              {
+                "type": "tail"
+                , "config": {
                   "tag": "test.debug"
-                  , "type": "stdout"
-                  , "config": {}
+                  , "path": "/data/test.json"
+                  , "format": "json"
+                  , "pos_file": "/data/test.json.pos"
                 }
-                , {
-                  "tag": "test.info"
-                  , "type": "forward"
-                  , "config": {
-                    "server": "remote"
-                  }
+              }
+            ]
+            , "matches": [
+              {
+                "tag": "test.debug"
+                , "type": "stdout"
+                , "config": {}
+              }
+              , {
+                "tag": "test.info"
+                , "type": "forward"
+                , "config": {
+                  "server": "remote"
                 }
-              ]
-              , "includes": [
-                "/etc/hoge.conf"
-              ]
-            }
+              }
+            ]
+            , "includes": [
+            ]
           }
         ]
       }
@@ -43,27 +40,25 @@
         , "fluentds": [
           {
               "name": "fuga"
-            , "plugins": {
-              "sources": [
-                {
-                  "type": "forward"
-                  , "config": {
-                    "port": 24224
-                  }
+            , "sources": [
+              {
+                "type": "forward"
+                , "config": {
+                  "port": 24224
                 }
-              ]
-              , "matches": [
-                {
-                  "tag": "test.info"
-                  , "type": "file"
-                  , "config": {
-                    "path": "/data/log/info"
-                  }
+              }
+            ]
+            , "matches": [
+              {
+                "tag": "test.info"
+                , "type": "file"
+                , "config": {
+                  "path": "/data/log/info"
                 }
-              ]
-              , "includes": [
-              ]
-            }
+              }
+            ]
+            , "includes": [
+            ]
           }
         ]
       }
